@@ -2,22 +2,22 @@ version: '3'
 
 services:
     db:
-        container_name: yegitek_mysql
+        container_name: sablon_mysql
         image: mysql:latest
         command: --default-authentication-plugin=mysql_native_password
         volumes:
             - "db_app:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: "pass"
-            MYSQL_DATABASE: "yegitek"
+            MYSQL_DATABASE: "sablon"
             MYSQL_USER: "user"
             MYSQL_PASSWORD: "pass"
         ports:
-            - 3307:3306
+            - 3333:3306
         networks:
             - symfony
     php:
-        container_name: yegitek_php
+        container_name: sablon_php
         build:
             context: .
             dockerfile: docker/php/Dockerfile
@@ -26,14 +26,14 @@ services:
         networks:
             - symfony
     nginx:
-        container_name: yegitek_nginx
+        container_name: sablon_nginx
         build:
             context: .
             dockerfile: docker/nginx/Dockerfile
         volumes:
             - ./:/var/www/
         ports:
-            - 80:80
+            - 90:80
         networks:
             - symfony
 volumes:
