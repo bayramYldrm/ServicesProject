@@ -1,0 +1,47 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/vendor.zip
+/.env
+/.env.test
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+/.DS_Store
+/.idea/
+/public/.DS_Store
+
+/public/uploads/is_dosyalari/
+/public/uploads/xlsx/
+
+/.github/workflows/main.yml
+/.github/workflows
+/.github
+
+translations/
+/translations/messages.tr.yml
+messages.tr.yml
+
+config/.DS_Store
+docker/.DS_Store
+public/plugins/.DS_Store
+public/uploads/
+src/.DS_Store
+templates/.DS_Store
+
+.DS_Store
+/.vscode/
+*.pyc
+fabric/fabfile.pyc
+
+/data

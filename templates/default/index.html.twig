@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block breadcrumb %}
+    {{ include('default/breadcrumbs.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Hoş Geldiniz!</h3>
+        </div>
+        <div class="card-body">
+            Soldaki Menüden İşlemleri Yapabilirsiniz.
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+{% endblock %}

@@ -1,0 +1,12 @@
+{% if breadcrumbs is defined %}
+<ol class="breadcrumb float-sm-right">
+    {% if breadcrumbs.items is defined %}
+        {% for item in breadcrumbs['items'] %}
+            <li class="breadcrumb-item"><a href="{{ item['url'] }}">{{ item['title'] }}</a></li>
+        {% endfor %}
+    {% endif %}
+    {% if breadcrumbs.last is defined %}
+        <li class="breadcrumb-item active">{{ breadcrumbs['last'] }}</li>
+    {% endif %}
+</ol>
+{% endif %}
