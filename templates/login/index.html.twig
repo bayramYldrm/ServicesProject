@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Şablon | Giriş</title>
+    <title>{{ 'giris'|trans|raw }}</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -14,19 +14,19 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a><b>Şablon</b>Giriş</a>
+        <a>{{ 'panel_giris_yazisi'|trans|raw }}</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Giriş Bilgileri</p>
+            <p class="login-box-msg">{{ 'giris_bilgileriniz'|trans|raw }}</p>
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
             <form action="{{ path('app_login') }}" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Kullanıcı Adı" name="_username" value="{{ last_username }}">
+                    <input type="text" class="form-control" placeholder="{{ 'eposta'|trans|raw }}" name="_username" value="{{ last_username }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Parola" name="_password">
+                    <input type="password" class="form-control" placeholder="{{ 'parola'|trans|raw }}" name="_password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -47,7 +47,7 @@
                     <!-- /.col -->
                     <div class="col-4">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                        <button type="submit" class="btn btn-primary btn-block">Giriş</button>
+                        <button type="submit" class="btn btn-primary btn-block">{{ 'giris'|trans|raw }}</button>
                     </div>
                     <!-- /.col -->
                 </div>

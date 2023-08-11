@@ -19,15 +19,14 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: /panel
                 enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout
                 target: app_login
     role_hierarchy:
-        ROLE_PROTOKOL_ADMIN: [ROLE_PROTOKOL_VIEW, ROLE_PROTOKOL_EDIT, ROLE_PROTOKOL_DELETE, ROLE_PROTOKOL_CREATE]
-        ROLE_BUTCE_ADMIN: [ROLE_BUTCE_VIEW, ROLE_BUTCE_EDIT, ROLE_BUTCE_DELETE, ROLE_BUTCE_CREATE]
-        ROLE_ADMIN: [ROLE_PROTOKOL_ADMIN, ROLE_BUTCE_ADMIN]
+        ROLE_ADMIN: [ROLE_ADMIN]
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

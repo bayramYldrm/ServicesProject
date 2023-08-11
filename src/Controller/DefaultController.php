@@ -9,20 +9,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/default', name: 'app_default')]
-    #[IsGranted('ROLE_PROTOKOL_VIEW')]
+    #[Route('/', name: 'app_default')]
     public function index(): Response
     {
-         $breadcrumbs['items'] = [
-            [
-                "title" => "Home",
-                "url" => $this->generateUrl('app_default')
-            ]
-        ];
-        $breadcrumbs['last'] = "Anasayfa";
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 
