@@ -27,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 100, unique: true)]
+    private ?string $eposta = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +89,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEposta(): ?string
+    {
+        return $this->eposta;
+    }
+
+    /**
+     * @param string|null $eposta
+     */
+    public function setEposta(?string $eposta): void
+    {
+        $this->eposta = $eposta;
     }
 
     /**
