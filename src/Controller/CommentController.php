@@ -229,6 +229,8 @@ class CommentController extends AbstractController
 
         $this->entityManager->flush();
 
+
+
         return new JsonResponse(['success' => true, 'dislikes' => $comment->getDislikes()]);
     }
 
