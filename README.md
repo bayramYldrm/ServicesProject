@@ -25,10 +25,6 @@ Follow these steps to get your project up and running:
 
 2. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/repository-name.git
-   cd repository-name
-
-
-
-
-https://github.com/bayramYldrm/ServicesProject
+   git clone https://github.com/bayramYldrm/ServicesProject.git
+   cd ServicesProject
+   
