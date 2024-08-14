@@ -101,12 +101,12 @@ class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'comment_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment): Response
     {
-        $this->denyAccessUnlessGranted('delete', $comment);
+        //$this->denyAccessUnlessGranted('delete', $comment);
 
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($comment);
             $this->entityManager->flush();
         }
@@ -159,6 +159,23 @@ class CommentController extends AbstractController
             'comments' => $this->getComments($parentComment->getUserActiv())
         ]);
     }
+
+    #[Route('/reply/{id}/delete', name: 'comment_reply_delete', methods: ['POST'])]
+    public function deleteReply(Request $request, Comment $comment): Response
+    {
+        // Kullanıcının silme yetkisine sahip olduğunu kontrol edin
+      //  $this->denyAccessUnlessGranted('delete', $comment);
+
+        // CSRF token doğrulaması
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($comment);
+            $this->entityManager->flush();
+        }
+
+        // Yanıtın bağlı olduğu UserActiv'e yönlendir
+        return $this->redirectToRoute('comment_index', ['userActiv' => $comment->getUserActiv()->getId()], Response::HTTP_SEE_OTHER);
+    }
+
 
     private function getComments(UserActiv $userActiv)
     {
@@ -247,6 +264,7 @@ class CommentController extends AbstractController
 
         return new JsonResponse(['success' => true]);
     }
+
 
 
 }

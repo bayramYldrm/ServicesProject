@@ -44,37 +44,25 @@
 
                                         <!-- Button Group -->
                                         <div class="btn-group mt-2" role="group">
-                                            <!-- Edit Form -->
-                                            {% if editForms[comment.id] is defined %}
-                                                <a href="#" class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#edit-form-{{ comment.id }}">
-                                                    <i class="bi bi-pencil"></i> Edit
-                                                </a>
-                                            {% endif %}
-
                                             <!-- Reply Form Button -->
-                                            <button class="btn btn-info" onclick="showCommentForm({{ loop.index }})">Reply</button>
+                                            <button class="btn btn-info" onclick="showCommentForm({{ loop.index }})">
+                                                <i class="bi bi-reply-all"></i> Reply
+                                            </button>
 
                                             <!-- Show Replies Button -->
                                             <a href="#" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#replies-{{ comment.id }}">
                                                 <i class="bi bi-chat-left-text"></i> Show Replies
                                             </a>
-                                        </div>
 
-                                        <!-- Edit Form Collapse -->
-                                        {% if editForms[comment.id] is defined %}
-                                            <div id="edit-form-{{ comment.id }}" class="collapse mt-2">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        {{ form_start(editForms[comment.id]) }}
-                                                        {{ form_widget(editForms[comment.id]) }}
-                                                        <button class="btn btn-primary" type="submit">
-                                                            <i class="bi bi-check"></i> Update
-                                                        </button>
-                                                        {{ form_end(editForms[comment.id]) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
+                                            <!-- Delete Button for Comment -->
+                                            <form action="{{ path('comment_delete', {'id': comment.id}) }}" method="post" style="display:inline;">
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                            </form>
+                                        </div>
 
                                         <!-- Reply Form -->
                                         <div id="commentFormContainer{{ loop.index }}" class="reply-form-container mt-3" style="display: none;">
@@ -98,6 +86,13 @@
                                                             <div class="card-body">
                                                                 <p>{{ reply.content }}</p>
                                                                 <small class="text-muted">by {{ reply.user.username }} on {{ reply.createdAt|date('Y-m-d H:i') }}</small>
+
+                                                                <!-- Delete Button for Reply -->
+                                                                <form action="{{ path('comment_reply_delete', {'id': reply.id}) }}" method="post" style="display:inline;">
+                                                                    <button class="btn btn-danger btn-sm" type="submit">
+                                                                        <i class="bi bi-trash"></i> Delete
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     {% endfor %}
@@ -105,26 +100,6 @@
                                             {% else %}
                                                 <p class="text-muted">No replies found.</p>
                                             {% endif %}
-                                        </div>
-
-                                        <!-- Like, Dislike, and Report Buttons -->
-                                        <div class="d-flex gap-2 mt-2">
-                                            <form action="{{ path('comment_like', {'id': comment.id}) }}" method="post" style="display:inline;">
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="bi bi-hand-thumbs-up"></i> Like ({{ comment.likes }})
-                                                </button>
-                                            </form>
-                                            <form action="{{ path('comment_dislike', {'id': comment.id}) }}" method="post" style="display:inline;">
-                                                <button class="btn btn-warning" type="submit">
-                                                    <i class="bi bi-hand-thumbs-down"></i> Dislike ({{ comment.dislikes }})
-                                                </button>
-                                            </form>
-                                            <form action="{{ path('comment_report', {'id': comment.id}) }}" method="post">
-                                                <button class="btn btn-danger" type="submit">
-                                                    <i class="bi bi-flag"></i> Reported ({{ comment.reported }})
-                                                </button>
-                                            </form>
-
                                         </div>
                                     </div>
                                 </div>
@@ -171,8 +146,7 @@
                 });
             });
         });
-    </script>
-    <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.like-button').forEach(button => {
                 button.addEventListener('click', function() {
@@ -225,21 +199,16 @@
                         }
                     }).then(response => {
                         if (response.ok) {
-                            // Başarılıysa report durumunu güncelle
+                            // Başarılıysa rapor sayısını güncelle
                             this.classList.toggle('reported');
-                            alert('Report işlemi başarılı.');
+                            const reportsCount = this.nextElementSibling;
+                            reportsCount.textContent = parseInt(reportsCount.textContent) + (this.classList.contains('reported') ? 1 : -1);
                         }
                     });
                 });
             });
-
         });
     </script>
-
-
-
-
-
 
     <style>
         .container {
