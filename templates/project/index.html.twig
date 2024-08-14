@@ -1,0 +1,112 @@
+{% extends 'base.panel.html.twig' %}
+{% block title %}UserActiv Index{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="toolbar mb-4 d-flex justify-content-between">
+            <form id="search-form" action="{{ path('app_project_search') }}" method="GET" class="d-flex align-items-center">
+                <input type="text" name="query" placeholder="Search here..." aria-label="Search" class="form-control me-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Add Project
+            </button>
+        </div>
+
+        <!-- Modal for Adding Project -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="projectForm" action="{{ path('app_project_new') }}" method="post">
+                            <div class="form-group">
+                                <label for="owner">Owner</label>
+                                <input type="text" class="form-control" id="owner" name="owner" placeholder="Enter owner" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectName">Project Name</label>
+                                <input type="text" class="form-control" id="projectName" name="projectName" placeholder="Enter project name" required>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button id="submitButton" type="submit" class="btn btn-primary w-48">
+                                    Submit
+                                </button>
+                                <button id="loadingButton" type="button" class="btn btn-primary w-48 d-none">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project List Table -->
+        <div class="card card-dark">
+            <div class="card-header">
+                <h3 class="card-title">Project List Table</h3>
+            </div>
+            <div class="card-body">
+                <table id="servicesTable" class="table table-dark table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ip</th>
+                        <th>Project Name</th>
+                        <th>Owner</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if user_activs is defined %}
+                        {% for user_activ in user_activs %}
+                            <tr>
+                                <td>{{ user_activ.id }}</td>
+                                <td>{{ user_activ.ip ? user_activ.ip : 'No IP' }}</td>
+                                <td>{{ user_activ.projectName }}</td>
+                                <td>{{ user_activ.owner }}</td>
+                                <td>{{ user_activ.createdAt ? user_activ.createdAt|date('Y-m-d H:i:s') : 'No Date' }}</td>
+                                <td class="d-flex justify-content-around">
+                                    <a href="{{ path('app_project_show', {'id': user_activ.id}) }}" class="btn btn-info btn-sm">
+                                        <span class="fas fa-eye"></span> Show
+                                    </a>
+                                    <a href="{{ path('app_project_edit', {'id': user_activ.id}) }}" class="btn btn-warning btn-sm">
+                                        <span class="fas fa-edit"></span> Edit
+                                    </a>
+                                    <a href="{{ path('edit_services', {'id': user_activ.id}) }}" class="btn btn-success btn-sm">
+                                        <span class="fas fa-cogs"></span> Export
+                                    </a>
+                                    <a href="{{ path('user_project_task_list', {'projectId': user_activ.id}) }}" class="btn btn-success btn-sm">
+                                        <span class="fas fa-tasks"></span> Tasks
+                                    </a>
+                                    <a href="{{ path('comment_index', {'userActiv': user_activ.id}) }}" class="btn btn-info btn-sm">
+                                        <span class="fas fa-comments"></span> Comments
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">No records found</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_project_new') }}" class="btn btn-success">
+                    <span class="fas fa-plus"></span> Create New
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

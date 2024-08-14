@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Task{% endblock %}
+
+{% block body %}
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card">
+            <div class="header">
+                <h3>Create New Task</h3>
+            </div>
+            <div class="body">
+                {{ form_start(form, {'attr': {'class': 'form', 'novalidate': 'novalidate'}}) }}
+
+                <!-- Form fields -->
+                <div class="form-group mb-3">
+                    {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Enter task title'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter task description'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.status, 'Status', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.status, {'attr': {'class': 'form-control', 'placeholder': 'Select status'}}) }}
+                    {{ form_errors(form.status) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.priority, 'Priority', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.priority, {'attr': {'class': 'form-control', 'placeholder': 'Select priority'}}) }}
+                    {{ form_errors(form.priority) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.file_path, 'Folder', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.file_path, {'attr': {'class': 'form-control', 'webkitdirectory': true, 'directory': true, 'multiple': true, 'placeholder': 'Upload a folder'}}) }}
+                    {{ form_errors(form.file_path) }}
+                </div>
+
+                <!-- Hidden fields for created_at and updated_at -->
+                <div class="form-group mb-3">
+                    <label for="created_at" class="form-label">Created At</label>
+                    {{ form_widget(form.created_at, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="updated_at" class="form-label">Updated At</label>
+                    {{ form_widget(form.updated_at, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                    <a href="{{ path('app_task_index') }}" class="btn btn-secondary ms-2">Back to List</a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #f4f9fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Sayfanın tam yüksekliğinde ortalama */
+        }
+
+        .card {
+            width: 500px;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-sizing: border-box;
+            margin: 20px;
+        }
+
+        .header {
+            height: 80px;
+            width: 100%;
+            background-image: linear-gradient(to right, #007bff, #0056b3);
+            border-bottom: 5px solid #0056b3;
+            padding: 10px;
+            box-sizing: border-box;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .header h3 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .body {
+            padding: 15px;
+            background-color: #f9f9f9;
+            color: #000000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group .form-control {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .3s ease, border-color .3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: 1px solid #6c757d;
+            color: #ffffff !important;
+            border-radius: 4px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .3s ease, border-color .3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const folderInput = document.querySelector('[name="{{ form.file_path.vars.full_name }}"]');
+
+            folderInput.addEventListener('change', function(event) {
+                const files = event.target.files;
+                let folderStructure = {};
+
+                for (let file of files) {
+                    const path = file.webkitRelativePath || file.name;
+                    const parts = path.split('/');
+                    let current = folderStructure;
+
+                    for (let part of parts) {
+                        if (!current[part]) {
+                            current[part] = {};
+                        }
+                        current = current[part];
+                    }
+                }
+
+                console.log(folderStructure);
+                // İsterseniz burada dosya yapısını işleyebilir ve backend'e gönderebilirsiniz.
+            });
+        });
+    </script>
+{% endblock %}

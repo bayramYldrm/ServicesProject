@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects and Services</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Projects</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Project Name</th>
+        <th>Owner</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for userActiv in userActivs %}
+        <tr>
+            <td>{{ userActiv.id }}</td>
+            <td>{{ userActiv.projectName }}</td>
+            <td>{{ userActiv.owner }}</td>
+            <td>
+                <a href="{{ path('add_service_form', { 'id': userActiv.id }) }}">Add Service</a>
+                <a href="{{ path('edit_services', { 'id': userActiv.id }) }}">Edit Services</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

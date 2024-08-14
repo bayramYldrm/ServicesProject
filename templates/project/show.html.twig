@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Show UserActiv</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: #ffffff;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 15px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .list-group-item i {
+            color: #007bff;
+            margin-right: 20px;
+            font-size: 1.5em;
+        }
+
+        .list-group-item .info {
+            flex: 1;
+        }
+
+        .list-group-item .info h5 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .list-group-item .info p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .scrollable-section {
+            max-height: 300px; /* You can adjust this value based on your needs */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f8f9fa;
+            margin-bottom: 20px;
+        }
+
+        .tasks-list-item,
+        .services-list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .tasks-list-item i,
+        .services-list-item i {
+            color: #007bff;
+            margin-right: 20px;
+            font-size: 1.5em;
+        }
+
+        .tasks-list-item .info,
+        .services-list-item .info {
+            flex: 1;
+        }
+
+        .card-footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card-footer .btn {
+            margin: 0 10px; /* Aralarına boşluk ekler */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main content -->
+<main role="main" class="container mt-4">
+    <div class="card bg-light text-dark">
+        <div class="card-header">
+            <h3>SHOW PROJECT DETAILS</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-id-badge"></i>
+                    <div class="info">
+                        <h5>ID</h5>
+                        <p>{{ user_activ.id }}</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-network-wired"></i>
+                    <div class="info">
+                        <h5>IP Address</h5>
+                        <p>{{ user_activ.ip }}</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <div class="info">
+                        <h5>Project Name</h5>
+                        <p>{{ user_activ.projectName }}</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-user"></i>
+                    <div class="info">
+                        <h5>Owner</h5>
+                        <p>{{ user_activ.owner }}</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="info">
+                        <h5>Created At</h5>
+                        <p>{{ user_activ.createdAt ? user_activ.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                    </div>
+                </li>
+            </ul>
+            <h4 class="mt-4">Services:</h4>
+            <div class="scrollable-section">
+                <ul class="list-group">
+                    {% for userActivService in user_activ.userActivServices %}
+                        <li class="list-group-item bg-light text-dark services-list-item">
+                            <i class="fas fa-cogs"></i>
+                            <div class="info">
+                                <h5>{{ userActivService.service.name }}</h5>
+                                <p>Version: {{ userActivService.service.version }}</p>
+                                <p>Service Name: {{ userActivService.service.serviceName }}</p>
+                                <p>Category: {{ userActivService.service.category }}</p>
+                                <p>Active: {{ userActivService.service.isActive ? 'Yes' : 'No' }}</p>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item bg-light text-dark services-list-item">No services added yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <h4 class="mt-4">Tasks:</h4>
+            <div class="scrollable-section">
+                <ul class="list-group">
+                    {% for userProjectTask in user_activ.userProjectTasks %}
+                        <li class="list-group-item bg-light text-dark tasks-list-item mb-3 border rounded">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-tasks fa-2x me-3"></i>
+                                <div class="info w-100">
+                                    <h5 class="mb-2">{{ userProjectTask.task.title }}</h5>
+                                    <p class="mb-1"><strong>Description:</strong> {{ userProjectTask.task.description }}</p>
+                                    <p class="mb-1"><strong>Status:</strong> {{ userProjectTask.task.status }}</p>
+                                    <p class="mb-1"><strong>Priority:</strong> {{ userProjectTask.task.priority }}</p>
+                                    <p class="mb-1"><strong>Created at:</strong> {{ userProjectTask.task.createdAt|date('Y-m-d H:i:s') }}</p>
+                                    <p class="mb-1"><strong>Updated at:</strong> {{ userProjectTask.task.updatedAt|date('Y-m-d H:i:s') }}</p>
+                                    <p class="mb-1"><strong>File:</strong> {{ userProjectTask.task.filePath }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item bg-light text-dark tasks-list-item mb-3 border rounded">No tasks added yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('app_project_index') }}" class="btn btn-secondary">
+                <span class="fas fa-arrow-left"></span> Back to list
+            </a>
+            <a href="{{ path('app_project_edit', {'id': user_activ.id}) }}" class="btn btn-primary">
+                <span class="fas fa-edit"></span> Edit
+            </a>
+            <a href="{{ path('edit_services', {'id': user_activ.id}) }}" class="btn btn-success">
+                <span class="fas fa-cogs"></span> Services
+            </a>
+            <a href="{{ path('user_project_task_add', {'projectId': user_activ.id}) }}" class="btn btn-success">
+                <span class="fas fa-tasks"></span> Tasks
+            </a>
+            {{ include('project/_delete_form.html.twig') }}
+        </div>
+    </div>
+</main>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

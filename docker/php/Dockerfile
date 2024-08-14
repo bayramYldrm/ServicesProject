@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxslt1-dev \
     acl \
-    python \
+    python3 \
     python3-pip \
     fabric \
     libxml2-dev \

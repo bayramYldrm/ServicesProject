@@ -4,12 +4,12 @@ services:
     db:
         container_name: sablon_mysql
         image: mysql:latest
-        command: --default-authentication-plugin=mysql_native_password
+       # command: --default-authentication-plugin=mysql_native_password
         volumes:
             - "db_app:/var/lib/mysql"
         environment:
             MYSQL_ROOT_PASSWORD: "pass"
-            MYSQL_DATABASE: "sablon"
+            MYSQL_DATABASE: "taslak"
             MYSQL_USER: "user"
             MYSQL_PASSWORD: "pass"
         ports:
@@ -17,7 +17,7 @@ services:
         networks:
             - symfony
     php:
-        container_name: sablon_php
+        container_name: taslak_php
         build:
             context: .
             dockerfile: docker/php/Dockerfile
@@ -26,7 +26,7 @@ services:
         networks:
             - symfony
     nginx:
-        container_name: sablon_nginx
+        container_name: taslak_nginx
         build:
             context: .
             dockerfile: docker/nginx/Dockerfile

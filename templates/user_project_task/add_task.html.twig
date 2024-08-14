@@ -1,0 +1,192 @@
+{% block body %}
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card">
+            <div class="header">
+                <h3>Add Task to Project: {{ project.projectName }}</h3>
+            </div>
+            <div class="body">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.task) }}
+                    {{ form_widget(form.task, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="footer">
+                <ul>
+                    <li>
+                        <a href="{{ path('user_project_task_list', { projectId: project.id }) }}" class="btn btn-secondary">
+                            <span class="fas fa-arrow-left"></span> Back to Task List
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<style>
+    body {
+        background-color: #f4f9fc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .justify-content-center {
+        justify-content: center;
+    }
+
+    .min-vh-100 {
+        min-height: 100vh;
+    }
+
+    .container {
+        margin: 0;
+        width: 100%;
+    }
+
+    .card {
+        width: 400px;
+        background-color: #ffffff;
+        color: #000000;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .header {
+        height: 80px;
+        width: 100%;
+        background-image: linear-gradient(to right, #007bff, #0056b3);
+        border-bottom: 5px solid #0056b3;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .header h3 {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 5px 0;
+    }
+
+    .body {
+        padding: 15px;
+        background-color: #f9f9f9;
+        color: #000000;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .form-group .form-control {
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .form-control-lg {
+        padding: 12px;
+        font-size: 1.25rem;
+        border-radius: 6px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        color: #ffffff;
+        border-radius: 4px;
+        padding: 8px 15px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color .3s ease, border-color .3s ease;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: 1px solid #6c757d;
+        color: #ffffff !important;
+        border-radius: 4px;
+        padding: 8px 15px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color .3s ease, border-color .3s ease;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+        color: #ffffff; /* Hover durumunda da beyaz yazı */
+    }
+
+    .footer {
+        background-color: #ffffff;
+        border-top: 1px solid #ccc;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #000000;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .footer ul {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .footer ul li {
+        margin: 0 10px;
+    }
+
+    .footer ul li a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .footer ul li a:hover {
+        text-decoration: underline;
+    }
+</style>

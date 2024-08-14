@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Service{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card bg-dark text-white">
+            <div class="card-header">
+                <h1>Add Service to {{ userActiv.projectName }}</h1>
+            </div>
+            <div class="card-body">
+                <form action="{{ path('add_service_to_user') }}" method="post">
+                    <input type="hidden" name="userActivId" value="{{ userActiv.id }}">
+
+                    <div class="form-group mb-3">
+                        <label for="serviceId">Select Service:</label>
+                        <select name="serviceId" id="serviceId" class="form-control">
+                            {% for service in services %}
+                                <option value="{{ service.id }}">{{ service.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Service</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

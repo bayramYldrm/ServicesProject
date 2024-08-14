@@ -1,0 +1,6 @@
+<form action="{{ path('user_project_task_delete', { 'projectId': project.id, 'taskId': task.id }) }}" method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+    <button class="btn btn-danger btn-sm" type="submit">
+        <span class="fas fa-trash"></span> Delete
+    </button>
+</form>

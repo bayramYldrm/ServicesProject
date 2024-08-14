@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,107 +14,143 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $username = null;
+    private ?string $Email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(length: 50, unique: true)]
+    private ?string $Username = null;
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
+    #[ORM\Column(length: 255)]
+    private ?string $Password = null;
 
-    #[ORM\Column(length: 100, unique: true)]
-    private ?string $eposta = null;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserActiv::class)]
+    private Collection $userActivs;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->userActivs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->Email;
+    }
+
+    public function setEmail(string $Email): static
+    {
+        $this->Email = $Email;
+
+        return $this;
+    }
+
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->Username;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername(string $Username): static
     {
-        $this->username = $username;
+        $this->Username = $Username;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    public function getPassword(): ?string
     {
-        return (string) $this->username;
+        return $this->Password;
     }
 
-    /**
-     * @see UserInterface
-     */
+    public function setPassword(string $Password): static
+    {
+        $this->Password = $Password;
+
+        return $this;
+    }
+
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return ['ROLE_USER'];
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEposta(): ?string
-    {
-        return $this->eposta;
-    }
-
-    /**
-     * @param string|null $eposta
-     */
-    public function setEposta(?string $eposta): void
-    {
-        $this->eposta = $eposta;
-    }
-
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Eğer geçici hassas veri saklıyorsanız, burada temizleyin
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->Username;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserActiv>
+     */
+    public function getUserActivs(): Collection
+    {
+        return $this->userActivs;
+    }
+
+    public function addUserActiv(UserActiv $userActiv): self
+    {
+        if (!$this->userActivs->contains($userActiv)) {
+            $this->userActivs[] = $userActiv;
+            $userActiv->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserActiv(UserActiv $userActiv): self
+    {
+        if ($this->userActivs->removeElement($userActiv)) {
+            // set the owning side to null (unless already changed)
+            if ($userActiv->getUser() === $this) {
+                $userActiv->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

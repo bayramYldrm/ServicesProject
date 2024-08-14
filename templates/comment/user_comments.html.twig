@@ -1,0 +1,23 @@
+{% block body %}
+    <h1>Comments by {{ user.username }}</h1>
+
+    <div>
+        {% for comment in comments %}
+            <div>
+                <p>{{ comment.content }}</p>
+                <p>Likes: {{ comment.likes }} | Dislikes: {{ comment.dislikes }}</p>
+                <p>Status: {{ comment.status }}</p>
+                <p>Reported: {{ comment.reported }}</p>
+                <form action="{{ path('app_comment_like', {'id': comment.id}) }}" method="post">
+                    <button type="submit">Like</button>
+                </form>
+                <form action="{{ path('app_comment_dislike', {'id': comment.id}) }}" method="post">
+                    <button type="submit">Dislike</button>
+                </form>
+                <form action="{{ path('app_comment_report', {'id': comment.id}) }}" method="post">
+                    <button type="submit">Report</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

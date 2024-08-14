@@ -1,6 +1,6 @@
 {% extends 'base.panel.html.twig' %}
 
-{% block title %}Ana Sayfa{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block breadcrumb %}
     {{ include('panel/breadcrumbs.html.twig') }}
@@ -8,18 +8,45 @@
 
 {% block body %}
     <!-- Default box -->
-    <div class="card">
+    <div class="card card-primary" id="welcome-card">
         <div class="card-header">
-            <h3 class="card-title">Hoş Geldiniz!</h3>
+            <h3 class="card-title">Welcome!</h3>
+            <button type="button" class="close" data-dismiss="card" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="card-body">
-            Soldaki Menüden İşlemleri Yapabilirsiniz.
+            You can perform operations from the menu on the left.
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-
+            <span id="countdown-timer">This card will close in 15 seconds.</span>
         </div>
         <!-- /.card-footer-->
     </div>
     <!-- /.card -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var countdownElement = document.getElementById('countdown-timer');
+            var countdown = 15;
+
+            // Update the countdown every second
+            var countdownInterval = setInterval(function() {
+                countdown--;
+                countdownElement.textContent = 'This card will close in ' + countdown + ' seconds.';
+
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('welcome-card').style.display = 'none';
+                }
+            }, 1000);
+
+            // Close the card when the close button is clicked
+            document.querySelector('.close[data-dismiss="card"]').addEventListener('click', function() {
+                clearInterval(countdownInterval);
+                document.getElementById('welcome-card').style.display = 'none';
+            });
+        });
+    </script>
 {% endblock %}

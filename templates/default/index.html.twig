@@ -1,9 +1,400 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ 'panel_title'|trans }}</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .navbar-nav .nav-link {
+            color: #333333;
+            font-weight: 500;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #004080;
+        }
+        .main-sidebar {
+            background-color: #003d79;
+        }
+        .main-sidebar .nav-link {
+            color: #ffffff;
+        }
+        .main-sidebar .nav-link:hover {
+            background-color: #002d62;
+        }
+        .brand-link {
+            background-color: #003d79;
+        }
+        .brand-text {
+            color: #ffffff;
+        }
+        .content-wrapper {
+            background-color: #ffffff;
+            padding: 20px;
+        }
+        .main-footer {
+            background-color: #f8f9fa;
+            color: #333333;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+        .main-footer a {
+            color: #004080;
+            text-decoration: none;
+        }
+        .main-footer a:hover {
+            text-decoration: underline;
+            color: #002d62;
+        }
+        .main-footer .float-right {
+            display: none;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+            justify-content: center;
+            margin: 0 auto; /* Ortalamayı tam olarak sayfada yapar */
+        }
+        .search-box input {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+            flex: 1;
+        }
+        .search-box button {
+            border: none;
+            background-color: #003d79;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background-color: #002d62;
+        }
+        .card-primary {
+            border-color: #003d79;
+        }
+        .card-primary .card-header {
+            background-color: #003d79;
+            color: #ffffff;
+        }
+        .card-primary .card-footer {
+            background-color: #f8f9fa;
+            color: #333333;
+        }
+        .nav-treeview {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-treeview .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .nav-treeview .nav-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 0; /* Eklenmiş: Varsayılan marjı sıfırla */
+        }
+        .nav-treeview .nav-link:hover {
+            background-color: #f0f0f0; /* Hover efekti için arka plan rengi */
+        }
+        .nav-treeview .nav-icon {
+            margin-right: 10px;
+            font-size: 1.2em; /* İkon boyutunu ayarlamak için */
+        }
+        .nav-treeview p {
+            margin: 0;
+            padding: 0;
+            font-size: 1em; /* Yazı boyutunu ayarlamak için */
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="hold-transition layout-navbar-fixed sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+    {% if app.user %}
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link">Welcome, {{ app.user.username }}</a>
+                </li>
+            </ul>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}" role="button">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="{{ path('app_default') }}" class="brand-link">
+                <img src="{{ asset('img/logoproje.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{ 'Services Project'|trans }}</span>
+            </a>
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ path('app_project_index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>Home Projects</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user-cog"></i>
+                                <p>
+                                    User Settings
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ path('app_user_edit', { 'id': app.user.id }) }}" class="nav-link">
+                                        <i class="nav-icon fas fa-user-edit"></i>
+                                        <p>Edit Account</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('app_user_delete', { 'id': app.user.id }) }}" class="nav-link">
+                                        <i class="nav-icon fas fa-user-slash"></i>
+                                        <p>Delete Account</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    Service Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ path('app_service_index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>List Services</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('app_service_new') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-plus"></i>
+                                        <p>Add New Service</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-{% block title %}Ana Sayfa{% endblock %}
+                        <!-- Task Management -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>
+                                    Task Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ path('app_task_index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>List Tasks</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('app_task_new') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-plus"></i>
+                                        <p>Add New Task</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-{% block body %}
-    Site Anasayfa
-    <br>
-    <a href="{{ path('app_login') }}">Login</a>
-{% endblock %}
+                        <li class="nav-item">
+                            <a href="{{ path('app_logout') }}" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p>Logout</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            {% block breadcrumb %}
+                                <ol class="breadcrumb float-sm-left">
+                                    <li class="breadcrumb-item"><a href="{{ path('app_default') }}">Home</a></li>
+                                    <li class="breadcrumb-item active">{{ 'panel_title'|trans }}</li>
+                                </ol>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <h5>Project Management</h5>
+                <!-- Search Box -->
+                <div class="search-box">
+                    <form id="search-form" action="{{ path('app_project_search') }}" method="GET">
+                        <input type="text" name="query" placeholder="Search here..." aria-label="Search">
+                        <button type="submit">Search</button>
+                    </form>
+                </div><br><br>
+                <!-- Welcome Card -->
+                <div class="card card-primary" id="welcome-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Welcome!</h3>
+                        <button type="button" class="close" data-dismiss="card" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        You can perform operations from the menu on the left.
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <span id="countdown-timer">This card will close in 15 seconds.</span>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                {% block body %}
+                    <div class="card text-white bg-dark mb-3" style="max-width: 200rem;">
+                        <div class="card-header" style="font-size: 35px">Project Management Dashboard</div>
+                        <div class="card-body">
+                            <img src="{{ asset('img/logoproje.png') }}" class="card-img-top" alt="Project Management" style="height: 200px; width: 200px;">
+                            <h5 class="card-title">Content:</h5>
+                            <p class="card-text">Welcome! Here you can easily add, edit, and delete projects. Each project’s
+                                details are recorded with the current date and time, and IP addresses are also tracked.
+                                The admin panel makes managing all your projects from a central location simpler than ever.</p><br>
+                            <h5 class="card-title">Features:</h5>
+                            <p class="card-text">Add Projects: Quickly add new projects by entering all the necessary details.
+                                The system will automatically record the current date and time.</p>
+                            <p class="card-text">Edit Projects: Update existing projects, change details, and view the latest update information.</p>
+                            <p class="card-text">Delete Projects: Easily remove projects that are no longer needed.</p>
+                            <p class="card-text">Time and IP Records: Each action is recorded with a timestamp and IP address to track the history of actions.</p><br>
+                            <p class="card-text">Enhance your project management processes with the admin panel. Easily monitor all project updates and historical records.</p>
+                        </div>
+                    </div>
+                    <!-- İçerik buraya gelecek -->
+                {% endblock %}
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div>
+                <strong>&copy; {{ "now"|date("Y") }} <a href="/">{{ 'site_owner_institution_name'|trans }}</a>.</strong> All rights reserved.
+            </div>
+            <div>
+                <b>Version</b> {{ 'version_number_here'|trans }}
+            </div>
+        </footer>
+    {% else %}
+        <script>
+            window.location.href = "{{ path('app_login') }}";
+        </script>
+    {% endif %}
+</div>
+<!-- ./wrapper -->
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('js/adminlte.min.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+<script>
+    {% if app.user %}
+    $(document).ready(function() {
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        // Arka planda kullanıcı adıyla hoş geldin mesajı
+        toastr.success('Welcome, {{ app.user.username }}');
+        // Arama formuna odaklanma işlevi
+        $('#search-form input').focus(function() {
+            $(this).parent().css('border', '1px solid #003d79');
+        }).blur(function() {
+            $(this).parent().css('border', '1px solid #ced4da');
+        });
+        // Kart kapatma işlevi ve geri sayım
+        var countdownElement = document.getElementById('countdown-timer');
+        var countdown = 15;
+        // Update the countdown every second
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownElement.textContent = 'This card will close in ' + countdown + ' seconds.';
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('welcome-card').style.display = 'none';
+            }
+        }, 1000);
+        // Close the card when the close button is clicked
+        document.querySelector('.close[data-dismiss="card"]').addEventListener('click', function() {
+            clearInterval(countdownInterval);
+            document.getElementById('welcome-card').style.display = 'none';
+        });
+    });
+    {% endif %}
+</script>
+</body>
+</html>

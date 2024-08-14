@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Services for Project</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f9fc; /* Açık mavi arka plan rengi */
+            color: #333; /* Koyu yazı rengi */
+        }
+        .card {
+            background-color: #ffffff; /* Beyaz kart arka planı */
+            border: none;
+            color: #333; /* Koyu yazı rengi */
+        }
+        .card-header {
+            background-color: #0056b3;/* Açık mavi header rengi */
+            color: #ffffff; /* Beyaz yazı rengi */
+        }
+        .btn-custom {
+            background-color: #0056b3; /* Mavi buton rengi */
+            color: #ffffff; /* Beyaz yazı rengi */
+        }
+        .btn-custom:hover {
+            background-color: #1565c0; /* Daha koyu mavi hover rengi */
+        }
+        .btn-danger {
+            background-color: #dc3545; /* Tehlike butonu rengi */
+            color: #ffffff;
+        }
+        .btn-danger:hover {
+            background-color: #c82333; /* Daha koyu tehlike rengi */
+        }
+        .list-group-item {
+            background-color: #ffffff; /* Beyaz arka plan rengi */
+            color: #333; /* Koyu yazı rengi */
+            border: 1px solid #e3f2fd; /* Açık mavi border */
+            border-radius: 0.25rem; /* Yuvarlatılmış köşeler */
+        }
+        .list-group-item .btn-danger {
+            color: #ffffff; /* Beyaz yazı rengi */
+        }
+        .list-group-item .btn-danger:hover {
+            background-color: #c82333; /* Daha koyu tehlike rengi */
+        }
+        .card-body {
+            padding: 1.5rem; /* Fazla padding */
+        }
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .footer-buttons .btn {
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Edit Services for Project: {{ userActiv.projectName }}</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for service in userActivServices %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ service.getService().ServiceName }}
+                        <form action="{{ path('remove_service_from_user') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="userActivId" value="{{ userActiv.id }}">
+                            <input type="hidden" name="serviceId" value="{{ service.getService().id }}">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <span class="fas fa-trash"></span> Remove
+                            </button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="footer-buttons">
+                <a href="{{ path('add_service_form', { 'id': userActiv.id }) }}" class="btn btn-custom">
+                    <span class="fas fa-plus"></span> Add More Services
+                </a>
+                <a href="{{ path('app_project_index') }}" class="btn btn-secondary">
+                    <span class="fas fa-arrow-left"></span> Back to list
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Show Task{% endblock %}
+
+{% block body %}
+    <main role="main" class="container mt-4">
+        <div class="card bg-light text-dark">
+            <div class="card-header">
+                <h3>SHOW TASK DETAILS</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-id-badge"></i>
+                        <div class="info">
+                            <h5>ID</h5>
+                            <p>{{ task.id }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-tag"></i>
+                        <div class="info">
+                            <h5>Title</h5>
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-align-left"></i>
+                        <div class="info">
+                            <h5>Description</h5>
+                            <p>{{ task.description }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <div class="info">
+                            <h5>Status</h5>
+                            <p>{{ task.status }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="info">
+                            <h5>Priority</h5>
+                            <p>{{ task.priority }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="info">
+                            <h5>Created At</h5>
+                            <p>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="info">
+                            <h5>Updated At</h5>
+                            <p>{{ task.updatedAt ? task.updatedAt|date('Y-m-d H:i:s') : '' }}</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-file"></i>
+                        <div class="info">
+                            <h5>File Path</h5>
+                            <p>{{ task.filePath }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a href="{{ path('app_task_index') }}" class="btn btn-secondary mx-2">
+                    <span class="fas fa-arrow-left"></span> Back to list
+                </a>
+                <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-primary mx-2">
+                    <span class="fas fa-edit"></span> Edit
+                </a>
+                {{ include('task/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: #ffffff;
+            border-bottom: 2px solid #0056b3;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 15px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .list-group-item i {
+            color: #007bff;
+            margin-right: 20px;
+            font-size: 1.5em;
+        }
+
+        .list-group-item .info {
+            flex: 1;
+        }
+
+        .list-group-item .info h5 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .list-group-item .info p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .card-footer {
+            padding: 10px;
+        }
+
+        .btn {
+            margin: 5px;
+        }
+    </style>
+{% endblock %}
