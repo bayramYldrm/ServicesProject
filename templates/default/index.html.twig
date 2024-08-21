@@ -353,7 +353,6 @@
 <!-- Toastr -->
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script>
-
     {% if app.user %}
     $(document).ready(function() {
         toastr.options = {
@@ -369,7 +368,6 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
-
         toastr.success('Welcome, {{ app.user.username }}');
         $('#search-form input').focus(function() {
             $(this).parent().css('border', '1px solid #003d79');
@@ -392,10 +390,7 @@
             document.getElementById('welcome-card').style.display = 'none';
         });
     });
-
     {% endif %}
-
 </script>
-
 </body>
 </html>
