@@ -22,9 +22,3 @@ Follow these steps to get your project up and running:
    - [Docker](https://docs.docker.com/get-docker/)
    - [Symfony CLI](https://symfony.com/download)
    - [Composer](https://getcomposer.org/download/)
-
-2. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/bayramYldrm/ServicesProject.git
-   cd ServicesProject
-   
