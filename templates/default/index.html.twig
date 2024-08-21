@@ -368,12 +368,14 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
+
         toastr.success('Welcome, {{ app.user.username }}');
         $('#search-form input').focus(function() {
             $(this).parent().css('border', '1px solid #003d79');
         }).blur(function() {
             $(this).parent().css('border', '1px solid #ced4da');
         });
+
         var countdownElement = document.getElementById('countdown-timer');
         var countdown = 15;
         var countdownInterval = setInterval(function() {
