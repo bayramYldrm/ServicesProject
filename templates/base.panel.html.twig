@@ -319,10 +319,8 @@
                 success: function (response) {
                     console.log('Data received:', response);
 
-                    // Tablo gövdesini temizleyin
                     $('#projectsTable tbody').empty();
 
-                    // Verileri tabloya ekleyin
                     response.projects.forEach(function (item) {
                         var showUrl = `{{ path('app_project_show', { 'id': '__ID__' }) }}`.replace('__ID__', item.id);
                         var editUrl = `{{ path('app_project_edit', { 'id': '__ID__' }) }}`.replace('__ID__', item.id);
